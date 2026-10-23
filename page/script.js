@@ -546,8 +546,8 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     if (!Number.isFinite(numeric)) return;
     state.opacity = Math.max(0, Math.min(100, Math.round(numeric)));
     detailDialog.style.setProperty("--preview-opacity", String(state.opacity / 100));
-    detailDialog.style.setProperty("--opacity-progress", `${state.opacity}%`);
     $("preview-opacity").value = String(state.opacity);
+    $("preview-opacity").setAttribute("data-at-tick", String(Math.abs(state.opacity - Math.round(state.opacity / 20) * 20) <= 2));
     $("preview-opacity").setAttribute("aria-valuetext", t("opacityValue", { value: state.opacity }));
     $("opacity-value").textContent = `${state.opacity}%`;
   }
