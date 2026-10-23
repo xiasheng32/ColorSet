@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fafafa">
-  <meta name="description" content="201 组配色，保留 2–10 色方案与四种图表预览。">
+  <meta name="description" content="229 组配色，支持来源筛选、完整色值与四种图表预览。">
   <title>Color Database</title>
   <script>
     (() => {
@@ -34,10 +34,7 @@
 
   <a class="skip-link" href="#main" data-i18n="skip">跳到配色方案</a>
   <header class="site-header page-width">
-    <a class="brand" href="#main" aria-label="Color Database 首页" data-i18n-label="homeLabel">
-      <img class="brand-icon" src="./icon.svg" width="31" height="31" alt="" aria-hidden="true">
-      <h1 class="visually-hidden">Color Database</h1>
-    </a>
+    <h1 class="visually-hidden">Color Database</h1>
     <div class="header-actions">
       <nav id="view-control" class="segmented view-navigation" aria-label="配色分类" data-i18n-label="viewLabel">
         <span class="segment-thumb" aria-hidden="true"></span>
@@ -63,11 +60,12 @@
     <section class="collection" aria-label="配色方案" data-i18n-label="palettesLabel">
       <div class="collection-tools">
         <div class="filter-bar">
-          <label class="search-box" for="search-input"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg><span class="visually-hidden" data-i18n="search">搜索编号、名称或 HEX 色值</span><input id="search-input" type="search" placeholder="搜索编号、名称或 HEX 色值" data-i18n-placeholder="search" autocomplete="off" spellcheck="false"></label>
+          <label class="search-box" for="search-input"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg><span class="visually-hidden" data-i18n="search">搜索编号、名称、来源或 HEX</span><input id="search-input" type="search" placeholder="搜索编号、名称、来源或 HEX" data-i18n-placeholder="search" autocomplete="off" spellcheck="false"></label>
+          <label class="select-box source-select"><span class="visually-hidden" data-i18n="sourceFilterLabel">来源</span><select id="source-filter" aria-label="来源" data-i18n-label="sourceFilterLabel"><option value="all">全部来源</option></select><svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></label>
           <label class="select-box"><span class="visually-hidden" data-i18n="countFilterLabel">按颜色数量筛选</span><select id="count-filter" aria-label="颜色数量" data-i18n-label="countFilterLabel"><option value="all">全部色数</option></select><svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></label>
         </div>
         <div class="results-bar">
-          <p id="results-summary" role="status" aria-live="polite"><strong>全部配色</strong><span>201 组</span></p>
+          <p id="results-summary" role="status" aria-live="polite"><strong>全部配色</strong><span>229 组</span></p>
           <div><button id="reset-filters" class="text-button" type="button" data-i18n="clearFilters" hidden>清除筛选</button></div>
         </div>
       </div>
@@ -90,13 +88,24 @@
       </header>
       <div class="detail-content">
         <p id="invalid-warning" class="warning-note" hidden></p>
-        <div class="chart-grid">
+        <p id="preview-limit-note" class="preview-note" hidden></p>
+        <div class="chart-grid" lang="en">
           <figure class="chart-panel"><figcaption>Bar Chart with outlines</figcaption><div id="chart-bar" class="chart-container"></div></figure>
           <figure class="chart-panel"><figcaption>Boxplot with outlines</figcaption><div id="chart-box" class="chart-container"></div></figure>
           <figure class="chart-panel"><figcaption>Scatterplot without outlines</figcaption><div id="chart-scatter" class="chart-container"></div></figure>
           <figure class="chart-panel"><figcaption>Line chart without outlines</figcaption><div id="chart-line" class="chart-container"></div></figure>
         </div>
-        <section class="all-colors" aria-labelledby="all-colors-title"><div class="section-heading"><h3 id="all-colors-title"><span data-i18n="colors">Colors</span><span id="detail-color-count" class="color-count"></span></h3></div><div id="detail-color-grid" class="detail-color-grid"></div></section>
+        <div class="opacity-control">
+          <div class="opacity-heading"><label for="preview-opacity" data-i18n="opacity">不透明度</label><output id="opacity-value" for="preview-opacity">100%</output></div>
+          <div class="opacity-slider">
+            <div class="opacity-track" aria-hidden="true"><div class="opacity-fill"></div><div class="opacity-dots"><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+            <input id="preview-opacity" type="range" min="0" max="100" step="1" value="100">
+          </div>
+        </div>
+        <section id="all-colors" class="all-colors" aria-labelledby="all-colors-title">
+          <div class="section-heading"><h3 id="all-colors-title"><span data-i18n="colors">Colors</span><span id="detail-color-count" class="color-count"></span></h3><div id="color-pagination" class="color-pagination" hidden><button id="previous-colors" class="icon-button page-previous" type="button" aria-label="上一页颜色" data-i18n-label="previousColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button><span id="color-page-status" role="status" aria-live="polite" aria-atomic="true"></span><button id="next-colors" class="icon-button" type="button" aria-label="下一页颜色" data-i18n-label="nextColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button></div></div>
+          <div id="detail-color-grid" class="detail-color-grid"></div>
+        </section>
       </div>
     </div>
   </dialog>
