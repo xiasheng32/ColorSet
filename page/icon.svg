@@ -1,40 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <title>Wooden artist palette</title>
-  <defs>
-    <path id="board" d="M32 5C16.5 5 6 15.9 6 31c0 14.9 10.7 26 24.4 26 6.3 0 9.8-3.1 9.2-7.5-.3-2.2-2.8-3.5-2.5-5.6.3-2.8 2.6-4.7 5.7-4.7h4.3C54 39.2 58 34.7 58 28.5 58 15.3 47.5 5 32 5Z"/>
-    <linearGradient id="wood" x1="15" y1="6" x2="45" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#fff0cb"/><stop offset=".42" stop-color="#edcf97"/><stop offset="1" stop-color="#c58e4f"/></linearGradient>
-    <linearGradient id="edge" x1="12" y1="17" x2="40" y2="59" gradientUnits="userSpaceOnUse"><stop stop-color="#cfa268"/><stop offset="1" stop-color="#98612f"/></linearGradient>
-    <linearGradient id="hole-edge" x1="32" y1="26" x2="39" y2="37" gradientUnits="userSpaceOnUse"><stop stop-color="#966233"/><stop offset=".48" stop-color="#bc8e54"/><stop offset="1" stop-color="#fff0cc"/></linearGradient>
-    <radialGradient id="red" cx=".32" cy=".24" r=".84"><stop stop-color="#ffaaa1"/><stop offset=".4" stop-color="#ef6b59"/><stop offset="1" stop-color="#b63730"/></radialGradient>
-    <radialGradient id="yellow" cx=".32" cy=".24" r=".84"><stop stop-color="#fff3a4"/><stop offset=".42" stop-color="#f5c450"/><stop offset="1" stop-color="#cf8f23"/></radialGradient>
-    <radialGradient id="blue" cx=".32" cy=".24" r=".84"><stop stop-color="#abdff8"/><stop offset=".42" stop-color="#5b9fd5"/><stop offset="1" stop-color="#3263a0"/></radialGradient>
-    <radialGradient id="green" cx=".32" cy=".24" r=".84"><stop stop-color="#b3df9b"/><stop offset=".42" stop-color="#6aaf79"/><stop offset="1" stop-color="#397347"/></radialGradient>
-    <radialGradient id="purple" cx=".32" cy=".24" r=".84"><stop stop-color="#d9b6e2"/><stop offset=".42" stop-color="#a17bb8"/><stop offset="1" stop-color="#6f4c8c"/></radialGradient>
-    <mask id="thumb-hole"><rect width="64" height="64" fill="#fff"/><ellipse cx="35.7" cy="31.4" rx="4.1" ry="5.4" transform="rotate(28 35.7 31.4)" fill="#000"/></mask>
-    <clipPath id="grain-clip"><use href="#board"/></clipPath>
-    <filter id="board-shadow" x="0" y="0" width="64" height="64" filterUnits="userSpaceOnUse"><feDropShadow dy="1.4" stdDeviation="1" flood-color="#4c2c14" flood-opacity=".2"/></filter>
-    <filter id="paint-shadow" x="-35%" y="-35%" width="180%" height="190%"><feDropShadow dy=".7" stdDeviation=".55" flood-color="#62401e" flood-opacity=".3"/></filter>
-  </defs>
-  <g mask="url(#thumb-hole)">
-    <g filter="url(#board-shadow)">
-      <use href="#board" transform="translate(0 1.8)" fill="url(#edge)" stroke="#a6763f" stroke-width=".7"/>
-      <use href="#board" fill="url(#wood)" stroke="#bd9159" stroke-width=".8"/>
-      <g clip-path="url(#grain-clip)" stroke="#a8753e" stroke-width=".55" stroke-linecap="round" opacity=".17">
-        <path d="M1 26c14-13 30-16 48-12M0 31c17-14 34-15 56-11M7 41c15-11 33-14 55-11M10 46c13-8 23-9 34-10M19 56c7-5 12-6 19-6"/>
-        <path d="M19 8c9-3 18-2 26 1M9 20c12-11 23-12 34-9M13 49c6-4 12-6 19-6" stroke="#fff2ce" stroke-width=".8" opacity=".8"/>
-      </g>
-      <path d="M9.2 26.8C10.9 14.3 20.5 7.5 32 7.5c8.9 0 16.1 3.8 20.4 9.4" stroke="#fff8e3" stroke-width="1.1" stroke-linecap="round" opacity=".8"/>
-    </g>
-  </g>
-  <ellipse cx="35.7" cy="31.4" rx="4.55" ry="5.85" transform="rotate(28 35.7 31.4)" stroke="url(#hole-edge)" stroke-width="1.1"/>
-  <g filter="url(#paint-shadow)">
-    <path d="M13.1 18.2c-.5-3 1.9-5.6 4.7-5.8 3.3-.3 5.7 1.8 5.7 4.9.1 3.3-2.2 5.4-5.1 5.5-2.7.1-4.8-1.5-5.3-4.6Z" fill="url(#red)"/>
-    <path d="M28.2 12.9c-.1-3.2 2.2-5.1 5.1-4.9 3.2.1 5.1 2.5 4.8 5.4-.3 2.9-2.3 4.7-5.2 4.5-2.9-.2-4.8-2.1-4.7-5Z" fill="url(#yellow)"/>
-    <path d="M42.2 23.1c-.3-3.2 1.9-5.7 4.8-5.7 3.3-.1 5.7 2.5 5.5 5.6-.2 3.2-2.5 5.2-5.4 5.1-2.8-.1-4.6-2-4.9-5Z" fill="url(#blue)"/>
-    <path d="M9.7 33.1c-.1-3 2-5.2 4.7-5.2 3.1-.1 5.4 2.1 5.3 5.2-.1 2.8-2.1 5.1-5.1 5.1-2.8 0-4.8-2-4.9-5.1Z" fill="url(#green)"/>
-    <path d="M17.3 46.7c-.2-3.1 1.8-5.3 4.6-5.4 3-.1 5.3 2.1 5.2 5.1-.1 2.8-2.1 4.9-5 4.9-2.7.1-4.6-1.8-4.8-4.6Z" fill="url(#purple)"/>
-  </g>
-  <g stroke="#fff" stroke-width="1.15" stroke-linecap="round" opacity=".55">
-    <path d="M15.7 16.4c.6-1 1.5-1.5 2.6-1.5M30.4 11.9c.5-.9 1.3-1.3 2.4-1.3M44.6 21.6c.5-.9 1.2-1.4 2.2-1.5M12 31.9c.5-.8 1.1-1.2 2.1-1.3M19.6 45.3c.5-.8 1.1-1.2 2-1.3"/>
+  <title>Paintbrush</title>
+  <g transform="rotate(42 32 32)">
+    <path d="M28 8a4 4 0 0 1 8 0v22h-8V8Z" fill="#626a75"/>
+    <path d="M26.5 27h11l1.5 12H25l1.5-12Z" fill="#b9bec6"/>
+    <path d="M26.5 27h11l.4 3H26.1l.4-3Z" fill="#858d98"/>
+    <path d="M25 38h14v7c0 8-6 13-15 13h-3c5-4 4-8 4-13v-7Z" fill="#d7a160"/>
+    <path d="M25 45c4 1.8 9 1.8 14-.4C38 52.3 32.5 58 24 58h-3c4.7-3.8 4.1-7.8 4-13Z" fill="#4c87c6"/>
   </g>
 </svg>
