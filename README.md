@@ -16,7 +16,7 @@ ColorTools/
 
 ## 使用
 
-在线使用：[打开 colortools](https://xiasheng32.github.io/colorDatabase/page/)，无需下载。
+在线使用：[打开 colortools](https://xiasheng32.github.io/ColorTools/page/)，无需下载。
 
 双击 `page/index.html`，或在浏览器中打开该文件，即可离线使用。CSS、JavaScript 和 SVG 图标通过相对路径加载，请保持这些文件位于同一目录。
 
