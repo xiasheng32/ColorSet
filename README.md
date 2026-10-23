@@ -7,7 +7,6 @@
 ```text
 ColorTools/
 ├── README.md
-├── _config.yml  GitHub Pages 网站名称
 └── page/
     ├── index.html   页面入口
     ├── style.css    页面样式
