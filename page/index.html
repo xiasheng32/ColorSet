@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fafafa">
+  <meta name="description" content="201 组配色，保留 2–10 色方案与四种图表预览。">
+  <title>Color Database</title>
+  <script>
+    (() => {
+      let theme;
+      try { theme = localStorage.getItem("color-database.theme.v1"); } catch {}
+      if (theme !== "light" && theme !== "dark") theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = theme;
+    })();
+  </script>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.3"/><path d="m16.2 16.2 4.5 4.5"/></symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.6 4.9a5.4 5.4 0 0 0-7.6 0l-1 1-1-1a5.4 5.4 0 0 0-7.6 7.6L12 21l8.6-8.5a5.4 5.4 0 0 0 0-7.6Z"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m8 5 7 7-7 7"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.8"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20.8 13.2A9 9 0 0 1 10.8 3.1a9 9 0 1 0 10 10.1Z"/></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main" data-i18n="skip">跳到配色方案</a>
+  <header class="site-header page-width">
+    <a class="brand" href="#main" aria-label="Color Database 首页" data-i18n-label="homeLabel">
+      <img class="brand-icon" src="./icon.svg" width="31" height="31" alt="" aria-hidden="true">
+      <h1 class="visually-hidden">Color Database</h1>
+    </a>
+    <div class="header-actions">
+      <nav id="view-control" class="segmented view-navigation" aria-label="配色分类" data-i18n-label="viewLabel">
+        <span class="segment-thumb" aria-hidden="true"></span>
+        <button class="segment-button nav-button is-active" type="button" data-view="all" aria-pressed="true"><span data-i18n="all">全部</span></button>
+        <button class="segment-button nav-button" type="button" data-view="favorites" aria-pressed="false"><span data-i18n="favorites">收藏</span><span id="favorites-count" class="nav-count">0</span></button>
+      </nav>
+      <div class="preferences">
+        <div id="language-control" class="segmented language-control" role="group" aria-label="界面语言" data-i18n-label="languageLabel">
+          <span class="segment-thumb" aria-hidden="true"></span>
+          <button class="segment-button is-active" type="button" data-language="zh" lang="zh-CN" aria-label="简体中文" aria-pressed="true">中</button>
+          <button class="segment-button" type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+        </div>
+        <div id="theme-control" class="segmented theme-control" role="group" aria-label="显示模式" data-i18n-label="themeLabel">
+          <span class="segment-thumb" aria-hidden="true"></span>
+          <button class="segment-button is-active" type="button" data-theme-choice="light" aria-label="浅色模式" title="浅色模式" data-i18n-label="lightLabel" data-i18n-title="lightLabel" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#icon-sun"/></svg></button>
+          <button class="segment-button" type="button" data-theme-choice="dark" aria-label="深色模式" title="深色模式" data-i18n-label="darkLabel" data-i18n-title="darkLabel" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-moon"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page-width">
+    <section class="collection" aria-label="配色方案" data-i18n-label="palettesLabel">
+      <div class="collection-tools">
+        <div class="filter-bar">
+          <label class="search-box" for="search-input"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg><span class="visually-hidden" data-i18n="search">搜索编号、名称或 HEX 色值</span><input id="search-input" type="search" placeholder="搜索编号、名称或 HEX 色值" data-i18n-placeholder="search" autocomplete="off" spellcheck="false"></label>
+          <label class="select-box"><span class="visually-hidden" data-i18n="countFilterLabel">按颜色数量筛选</span><select id="count-filter" aria-label="颜色数量" data-i18n-label="countFilterLabel"><option value="all">全部色数</option></select><svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></label>
+        </div>
+        <div class="results-bar">
+          <p id="results-summary" role="status" aria-live="polite"><strong>全部配色</strong><span>201 组</span></p>
+          <div><button id="reset-filters" class="text-button" type="button" data-i18n="clearFilters" hidden>清除筛选</button></div>
+        </div>
+      </div>
+      <div id="palette-grid" class="palette-grid" role="list" aria-label="配色方案" data-i18n-label="palettesLabel"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <span class="empty-illustration"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span>
+        <h2 id="empty-title">没有找到这组颜色</h2>
+        <p id="empty-description">换个关键词，或试试其他筛选条件。</p>
+        <button id="empty-reset" class="primary-button" type="button"><span data-i18n="browseAll">查看全部配色</span><svg class="icon" aria-hidden="true"><use href="#icon-arrow"/></svg></button>
+      </div>
+      <noscript><p class="noscript-note">请启用 JavaScript 以浏览配色方案和图表预览。</p></noscript>
+    </section>
+  </main>
+
+  <dialog id="palette-dialog" class="palette-dialog" aria-labelledby="detail-title" lang="en">
+    <div class="detail-shell">
+      <header class="detail-header">
+        <div class="detail-title-block"><h2 id="detail-title"></h2><span class="detail-id" id="detail-id"></span></div>
+        <div class="detail-header-actions"><button id="copy-palette" class="primary-button" type="button"><svg class="icon" aria-hidden="true"><use href="#icon-copy"/></svg><span>Copy all</span></button><button id="detail-favorite" type="button" class="icon-button favorite-button" aria-label="Add favorite" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#icon-heart"/></svg></button><span class="header-action-divider"></span><button id="close-detail" class="icon-button" type="button" aria-label="Close preview" data-i18n-label="closePreview" autofocus><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button></div>
+      </header>
+      <div class="detail-content">
+        <p id="invalid-warning" class="warning-note" hidden></p>
+        <div class="chart-grid">
+          <figure class="chart-panel"><figcaption>Bar Chart with outlines</figcaption><div id="chart-bar" class="chart-container"></div></figure>
+          <figure class="chart-panel"><figcaption>Boxplot with outlines</figcaption><div id="chart-box" class="chart-container"></div></figure>
+          <figure class="chart-panel"><figcaption>Scatterplot without outlines</figcaption><div id="chart-scatter" class="chart-container"></div></figure>
+          <figure class="chart-panel"><figcaption>Line chart without outlines</figcaption><div id="chart-line" class="chart-container"></div></figure>
+        </div>
+        <section class="all-colors" aria-labelledby="all-colors-title"><div class="section-heading"><h3 id="all-colors-title"><span data-i18n="colors">Colors</span><span id="detail-color-count" class="color-count"></span></h3></div><div id="detail-color-grid" class="detail-color-grid"></div></section>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="copy-dialog" class="copy-dialog" aria-labelledby="copy-title" lang="en"><div class="copy-header"><h2 id="copy-title" data-i18n="copyTitle">Copy colors</h2><button id="close-copy" class="icon-button" type="button" aria-label="Close copy window" data-i18n-label="closeCopy"><svg class="icon" aria-hidden="true"><use href="#icon-close"/></svg></button></div><p data-i18n="copyHelp">Automatic copying is unavailable. Please copy the selected text manually.</p><label class="visually-hidden" for="copy-text" data-i18n="copyValues">Color values to copy</label><textarea id="copy-text" readonly spellcheck="false"></textarea><button id="select-copy" class="primary-button" type="button" data-i18n="selectAll">Select all</button></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg><span></span></div>
+</body>
+</html>
