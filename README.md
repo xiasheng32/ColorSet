@@ -13,7 +13,7 @@ colorDatabase/
     ├── index.html     # 页面结构与内置图标符号
     ├── style.css      # 布局、主题、系统字体与切换动画
     ├── script.js      # 配色数据、筛选、收藏、复制与 SVG 图表
-    └── icon.svg       # 透明背景的扁平画笔网站图标
+    └── icon.svg       # 透明背景的粉色冰淇淋网站图标
 ```
 
 ## 打开页面
