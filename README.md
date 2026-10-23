@@ -2,16 +2,13 @@
 
 原生 HTML、CSS、JavaScript 配色浏览工具。内置 201 组 2–10 色方案，无第三方依赖、构建步骤或后端。
 
-在线访问：[Color Database](https://xiasheng32.github.io/colorDatabase/) · 公开仓库：[xiasheng32/colorDatabase](https://github.com/xiasheng32/colorDatabase)
+在线访问：[Color Database](https://xiasheng32.github.io/colorDatabase/page/) · 公开仓库：[xiasheng32/colorDatabase](https://github.com/xiasheng32/colorDatabase)
 
 ## 文件结构
 
 ```text
 colorDatabase/
 ├── README.md          # 使用说明
-├── .github/
-│   └── workflows/
-│       └── pages.yml  # GitHub Pages 自动部署
 └── page/
     ├── index.html     # 页面结构与内置图标符号
     ├── style.css      # 布局、主题、系统字体与切换动画
@@ -33,12 +30,12 @@ python3 -m http.server 8765 --bind 127.0.0.1 --directory page
 
 ## 部署与更新
 
-推送到 `main` 分支会触发 GitHub Actions，也可在仓库的 Actions 页面手动运行部署。工作流将 `page/` 直接发布为站点根目录，无需构建。
+GitHub Pages 使用 **Deploy from a branch**，发布源为 `main` 分支的 `/ (root)`。推送后由 GitHub 自动构建并发布，页面入口位于 `page/`，无需添加仓库工作流文件。
 
 修改完成后，在 `colorDatabase/` 目录提交并推送：
 
 ```sh
-git add page README.md .github/workflows/pages.yml
+git add page README.md
 git commit -m "Update Color Database"
 git push origin main
 ```
