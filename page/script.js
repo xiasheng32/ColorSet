@@ -558,7 +558,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     const key = `${state.selected.id}:${width}`;
     if (key === previewKey) return;
     // Fit 4:3 canvases inside the available window without stretching the charts.
-    ["bar", "box", "scatter", "line"].forEach((kind) => {
+    ["bar", "density", "scatter", "line"].forEach((kind) => {
       $(`chart-${kind}`).innerHTML = chartSVG(kind, state.selected.colors.slice(0, PREVIEW_COLOR_LIMIT), width);
     });
     previewKey = key;
@@ -600,25 +600,45 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     };
   }
 
-  function quantile(sorted, fraction) {
-    const position = (sorted.length - 1) * fraction;
-    const low = Math.floor(position);
-    return sorted[low] + (sorted[Math.ceil(position)] - sorted[low]) * (position - low);
-  }
-
   const BAR_VALUES = [8.65, 7.2, 8.18, 9.85, 8.4, 7.7, 9.1, 8.6, 7.4, 9.3];
-  const BOX_VALUES = [
-    [7.05, 7.45, 8.7, 9.2, 9.98],
-    [7.0, 8.1, 8.65, 9.0, 9.85],
-    [7.0, 7.25, 7.45, 8.35, 9.95],
-    [7.1, 7.65, 8.25, 9.1, 9.88]
-  ];
   const DEMO = Array.from({ length: PREVIEW_COLOR_LIMIT }, (_, index) => {
     const random = randomSource(9173 + index * 71);
-    const sorted = Array.from({ length: 28 }, () => 8.5 + (random() - 0.5) * 2.9).sort((a, b) => a - b);
+    // Keep the same 28 draws so the other charts retain their sample data.
+    const uniforms = Array.from({ length: 28 }, () => random());
+    const densitySamples = uniforms.map((_, point) => {
+      const pair = Math.floor(point / 2) * 2;
+      const radius = Math.sqrt(-2 * Math.log(1 - uniforms[pair]));
+      const angle = 2 * Math.PI * uniforms[pair + 1];
+      const normal = radius * (point % 2 ? Math.sin(angle) : Math.cos(angle));
+      return 3 + (index % 6) * .65 + (index >= 6 ? .15 : 0) + (.65 + index % 4 * .16) * normal;
+    });
     const scatter = Array.from({ length: 26 }, () => [0.01 + random() * 0.98, index * .35 + (random() - .5) * .58]);
     const line = Array.from({ length: 20 }, (_, point) => [point + 1, Math.sin(point * 1.3 + index) * .15 + (random() - .5) * .75]);
-    return { mean: BAR_VALUES[index] ?? 7 + random() * 3, box: BOX_VALUES[index] || [sorted[0], quantile(sorted, .25), quantile(sorted, .5), quantile(sorted, .75), sorted[sorted.length - 1]], scatter, line };
+    return { mean: BAR_VALUES[index] ?? 7 + random() * 3, densitySamples, scatter, line };
+  });
+  const DENSITY_BANDWIDTH = .45;
+  const densitySamples = DEMO.flatMap((demo) => demo.densitySamples);
+  const DENSITY_DOMAIN = [Math.floor(Math.min(...densitySamples) - 3 * DENSITY_BANDWIDTH), Math.ceil(Math.max(...densitySamples) + 3 * DENSITY_BANDWIDTH)];
+  DEMO.forEach((demo) => {
+    demo.density = Array.from({ length: 97 }, (_, point) => {
+      const value = DENSITY_DOMAIN[0] + point / 96 * (DENSITY_DOMAIN[1] - DENSITY_DOMAIN[0]);
+      const density = demo.densitySamples.reduce((sum, sample) => sum + Math.exp(-.5 * ((value - sample) / DENSITY_BANDWIDTH) ** 2), 0)
+        / (demo.densitySamples.length * DENSITY_BANDWIDTH * Math.sqrt(2 * Math.PI));
+      return [value, density];
+    });
+  });
+  const DENSITY_SCALES = DEMO.map((_, index) => {
+    const curves = DEMO.slice(0, index + 1).map((demo) => demo.density);
+    const visible = curves.flatMap((curve) => {
+      const peak = Math.max(...curve.map((point) => point[1]));
+      return curve.filter((point) => point[1] >= peak * .02);
+    });
+    const step = (DENSITY_DOMAIN[1] - DENSITY_DOMAIN[0]) / 96;
+    return {
+      minX: Math.max(DENSITY_DOMAIN[0], Math.floor((Math.min(...visible.map((point) => point[0])) - step) * 2) / 2),
+      maxX: Math.min(DENSITY_DOMAIN[1], Math.ceil((Math.max(...visible.map((point) => point[0])) + step) * 2) / 2),
+      maxY: Math.ceil(Math.max(...curves.flatMap((curve) => curve.map((point) => point[1]))) * 1.04 * 100) / 100
+    };
   });
 
   function chartSVG(kind, colors, width) {
@@ -628,28 +648,30 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     const fontSize = narrow ? 9 : 10.5;
     const plotWidth = width - left - right, plotHeight = height - top - bottom;
     const count = colors.length;
-    const ymin = kind === "box" ? 6.85 : kind === "scatter" ? -.35 : kind === "line" ? .2 : 0;
-    const ymax = kind === "box" ? 10.15 : kind === "scatter" ? (count - 1) * .35 + .4 : kind === "line" ? Math.max(4, count) + .65 : 10.3;
+    const densityScale = DENSITY_SCALES[count - 1];
+    const ymin = kind === "scatter" ? -.35 : kind === "line" ? .2 : 0;
+    const ymax = kind === "density" ? densityScale.maxY : kind === "scatter" ? (count - 1) * .35 + .4 : kind === "line" ? Math.max(4, count) + .65 : 10.3;
     const y = (value) => top + plotHeight - (value - ymin) / (ymax - ymin) * plotHeight;
     const f = (number) => Number(number.toFixed(2));
     const groupX = (index) => left + (index + .5) * plotWidth / count;
-    const x = (value) => left + (kind === "scatter" ? value : (value - 1) / 19) * plotWidth;
+    const x = (value) => left + (kind === "density" ? (value - densityScale.minX) / (densityScale.maxX - densityScale.minX) : kind === "scatter" ? value : (value - 1) / 19) * plotWidth;
     const paint = (hex) => validColor(hex) ? hex : `url(#invalid-${kind})`;
     const safeStroke = (hex) => validColor(hex) ? hex : "#999";
     const title = (index, hex) => `Group ${String.fromCharCode(97 + index)} · ${escapeHTML(hex)}${validColor(hex) ? "" : " (invalid original value, gray placeholder)"}`;
     let axes = "";
     const lineTickMax = Math.max(4, count);
     const scatterStep = count <= 5 ? .5 : count <= 9 ? 1 : 2;
-    const yTicks = kind === "bar" ? [0, 2.5, 5, 7.5, 10] : kind === "box" ? [7, 8, 9, 10] : kind === "line" ? Array.from({ length: Math.min(lineTickMax, 5) }, (_, i) => Math.round((i + 1) * lineTickMax / Math.min(lineTickMax, 5))) : Array.from({ length: Math.floor(ymax / scatterStep) + 1 }, (_, i) => i * scatterStep);
+    const yTicks = kind === "bar" ? [0, 2.5, 5, 7.5, 10] : kind === "density" ? Array.from({ length: 5 }, (_, i) => i * ymax / 4) : kind === "line" ? Array.from({ length: Math.min(lineTickMax, 5) }, (_, i) => Math.round((i + 1) * lineTickMax / Math.min(lineTickMax, 5))) : Array.from({ length: Math.floor(ymax / scatterStep) + 1 }, (_, i) => i * scatterStep);
     for (const value of yTicks) {
-      axes += `<path d="M${left - 3} ${f(y(value))}h3" stroke="var(--chart-axis, #555)"/><text x="${left - 6}" y="${f(y(value) + 3)}" text-anchor="end">${kind === "bar" || kind === "scatter" ? value.toFixed(1) : value}</text>`;
+      axes += `<path d="M${left - 3} ${f(y(value))}h3" stroke="var(--chart-axis, #555)"/><text x="${left - 6}" y="${f(y(value) + 3)}" text-anchor="end">${kind === "bar" || kind === "scatter" ? value.toFixed(1) : f(value)}</text>`;
     }
     axes += `<rect x="${left}" y="${top}" width="${plotWidth}" height="${plotHeight}" stroke="var(--chart-axis, #555)" stroke-width=".8" fill="none"/>`;
-    if (kind === "bar" || kind === "box") {
+    if (kind === "bar") {
       const labelStep = Math.ceil(count / Math.max(1, Math.floor(plotWidth / 12)));
       colors.forEach((hex, index) => { if (index % labelStep === 0) axes += `<path d="M${f(groupX(index))} ${height - bottom}v3" stroke="var(--chart-axis, #555)"/><text x="${f(groupX(index))}" y="${height - 6}" text-anchor="middle">${String.fromCharCode(97 + index)}</text>`; });
     } else {
-      const ticks = kind === "scatter" ? width < 180 ? [0, .5, 1] : [0, .25, .5, .75, 1] : width < 180 ? [5, 10, 20] : [5, 10, 15, 20];
+      const densityTickCount = width < 180 ? 3 : 5;
+      const ticks = kind === "density" ? Array.from({ length: densityTickCount }, (_, i) => f(densityScale.minX + i / (densityTickCount - 1) * (densityScale.maxX - densityScale.minX))) : kind === "scatter" ? width < 180 ? [0, .5, 1] : [0, .25, .5, .75, 1] : width < 180 ? [5, 10, 20] : [5, 10, 15, 20];
       ticks.forEach((value) => { axes += `<path d="M${f(x(value))} ${height - bottom}v3" stroke="var(--chart-axis, #555)"/><text x="${f(x(value))}" y="${height - 6}" text-anchor="middle">${kind === "scatter" ? value.toFixed(2) : value}</text>`; });
     }
     const shapes = colors.map((hex, index) => {
@@ -660,10 +682,10 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
         const barWidth = plotWidth / count * .9;
         return `<rect class="chart-mark" ${common} x="${f(groupX(index) - barWidth / 2)}" y="${f(y(demo.mean))}" width="${f(barWidth)}" height="${f(y(0) - y(demo.mean))}" fill="${paint(hex)}" stroke="var(--chart-outline, #222)" stroke-width="1.2">${label}</rect>`;
       }
-      if (kind === "box") {
-        const [min, q1, median, q3, max] = demo.box;
-        const center = groupX(index), boxWidth = plotWidth / count * .75, cap = boxWidth * .2;
-        return `<g class="chart-mark" ${common}>${label}<path d="M${f(center)} ${f(y(min))}V${f(y(max))}M${f(center - cap)} ${f(y(min))}h${f(cap * 2)}M${f(center - cap)} ${f(y(max))}h${f(cap * 2)}" fill="none" stroke="var(--chart-outline, #333)" stroke-width="1.5"/><rect x="${f(center - boxWidth / 2)}" y="${f(y(q3))}" width="${f(boxWidth)}" height="${f(y(q1) - y(q3))}" fill="${paint(hex)}" stroke="var(--chart-outline, #333)" stroke-width="1.2"/><path d="M${f(center - boxWidth / 2)} ${f(y(median))}h${f(boxWidth)}" stroke="var(--chart-outline, #333)" stroke-width="2"/></g>`;
+      if (kind === "density") {
+        const curve = demo.density.map(([value, density], point) => `${point ? "L" : "M"}${f(x(value))} ${f(y(density))}`).join(" ");
+        const area = `${curve} L${f(x(DENSITY_DOMAIN[1]))} ${f(y(0))} L${f(x(DENSITY_DOMAIN[0]))} ${f(y(0))}Z`;
+        return `<g class="chart-mark" ${common}>${label}<path d="${area}" fill="${paint(hex)}" fill-opacity=".24"/><path d="${curve}" fill="none" stroke="${safeStroke(hex)}" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"${validColor(hex) ? "" : ' stroke-dasharray="4 3"'}/></g>`;
       }
       if (kind === "scatter") {
         return `<g ${common}>${label}${demo.scatter.map(([a, b]) => `<circle class="chart-mark" cx="${f(x(a))}" cy="${f(y(b))}" r="${narrow ? 2.4 : 3}" fill="${safeStroke(hex)}" stroke="none"/>`).join("")}</g>`;
@@ -671,8 +693,8 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
       const path = demo.line.map(([a, b], point) => `${point === 0 ? "M" : "L"}${f(x(a))} ${f(y((index < 4 ? 4 - index : index + 1) + b))}`).join(" ");
       return `<path class="chart-mark" ${common} d="${path}" fill="none" stroke="${safeStroke(hex)}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"${validColor(hex) ? "" : ' stroke-dasharray="4 3"'}>${label}</path>`;
     }).join("");
-    const names = { bar: "Bar chart", box: "Boxplot", scatter: "Scatterplot", line: "Line chart" };
-    const invalidPattern = (kind === "bar" || kind === "box") && colors.some((hex) => !validColor(hex))
+    const names = { bar: "Bar chart", density: "Overlapping density plot", scatter: "Scatterplot", line: "Line chart" };
+    const invalidPattern = (kind === "bar" || kind === "density") && colors.some((hex) => !validColor(hex))
       ? `<pattern id="invalid-${kind}" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#ccc"/><path d="M0 0V8" stroke="#eee" stroke-width="4"/></pattern>` : "";
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" style="--chart-font:${fontSize}px" role="img" aria-label="${names[kind]}, ${count} groups of fixed sample data" data-series-count="${count}"><defs><clipPath id="clip-${kind}"><rect x="${left}" y="${top}" width="${plotWidth}" height="${plotHeight}"/></clipPath>${invalidPattern}</defs>${axes}<g clip-path="url(#clip-${kind})">${shapes}</g></svg>`;
   }
