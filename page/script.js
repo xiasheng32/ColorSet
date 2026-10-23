@@ -622,6 +622,8 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
   });
 
   function chartSVG(kind, colors, width) {
+    // Scale the whole SVG in tiny windows so complete tick labels still fit.
+    width = Math.max(width, 140);
     const height = width * 3 / 4;
     const narrow = width < 220;
     const left = narrow ? 28 : 34, right = narrow ? 12 : 14, top = 6, bottom = narrow ? 20 : 22;
@@ -649,7 +651,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
       const labelStep = Math.ceil(count / Math.max(1, Math.floor(plotWidth / 12)));
       colors.forEach((hex, index) => { if (index % labelStep === 0) axes += `<path d="M${f(groupX(index))} ${height - bottom}v3" stroke="var(--chart-axis, #555)"/><text x="${f(groupX(index))}" y="${height - 6}" text-anchor="middle">${String.fromCharCode(97 + index)}</text>`; });
     } else {
-      const ticks = kind === "scatter" ? width < 180 ? [0, .5, 1] : [0, .25, .5, .75, 1] : width < 180 ? [5, 10, 20] : [5, 10, 15, 20];
+      const ticks = kind === "scatter" ? [0, .25, .5, .75, 1] : [5, 10, 15, 20];
       ticks.forEach((value) => { axes += `<path d="M${f(x(value))} ${height - bottom}v3" stroke="var(--chart-axis, #555)"/><text x="${f(x(value))}" y="${height - 6}" text-anchor="middle">${kind === "scatter" ? value.toFixed(2) : value}</text>`; });
     }
     const shapes = colors.map((hex, index) => {
