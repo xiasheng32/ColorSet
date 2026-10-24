@@ -10,15 +10,14 @@ ColorTools/
 └── page/
     ├── index.html   页面入口
     ├── style.css    页面样式
-    ├── script.js    配色数据与浏览器交互
-    └── icon.svg     原创粉色冰淇淋图标
+    └── script.js    配色数据与浏览器交互
 ```
 
 ## 使用
 
 在线使用：[打开 colortools](https://xiasheng32.github.io/ColorTools/page/)，无需下载。
 
-双击 `page/index.html`，或在浏览器中打开该文件，即可离线使用。CSS、JavaScript 和 SVG 图标通过相对路径加载，请保持这些文件位于同一目录。
+双击 `page/index.html`，或在浏览器中打开该文件，即可离线使用。CSS 和 JavaScript 通过相对路径加载，请保持这些文件位于同一目录。标签页图标使用内嵌的 🛼 emoji，无需独立图标文件。
 
 也可将 `page` 目录中的文件放到任意静态网站托管服务中。搜索、筛选、预览和复制均在浏览器本地完成，配色数据随页面加载，离线使用无需联网。
 
