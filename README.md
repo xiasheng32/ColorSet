@@ -1,6 +1,8 @@
 # ColorSet
 
-ColorSet 是一个内置 215 组方案的纯 HTML、CSS、JavaScript 配色工具，支持搜索、筛选、收藏、色值复制与图表预览。所有交互在浏览器内完成，无需后端、第三方依赖、安装或构建。
+**中文：** ColorSet 是一个包含 215 组配色的浏览器工具，支持搜索、筛选、收藏、复制色值和图表预览。无需安装或构建，也可离线使用。
+
+**English:** ColorSet is a browser-based palette tool with 215 schemes, search, filters, favorites, color copying, and chart previews. No installation or build is required, and it works offline.
 
 ## 目录
 
