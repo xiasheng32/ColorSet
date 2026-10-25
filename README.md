@@ -1,11 +1,11 @@
-# Colors
+# ColorSet
 
-Colors 是一个内置 229 组方案的纯 HTML、CSS、JavaScript 配色工具，支持搜索、筛选、收藏、色值复制与图表预览。所有交互在浏览器内完成，无需后端、第三方依赖、安装或构建。
+ColorSet 是一个内置 229 组方案的纯 HTML、CSS、JavaScript 配色工具，支持搜索、筛选、收藏、色值复制与图表预览。所有交互在浏览器内完成，无需后端、第三方依赖、安装或构建。
 
 ## 目录
 
 ```text
-Colors/
+ColorSet/
 ├── README.md
 └── page/
     ├── index.html   页面入口
@@ -15,7 +15,7 @@ Colors/
 
 ## 使用
 
-在线使用：[打开 Colors](https://xiasheng32.github.io/Colors/page/)，无需下载。
+在线使用：[打开 ColorSet](https://xiasheng32.github.io/ColorSet/page/)，无需下载。
 
 双击 `page/index.html`，或在浏览器中打开该文件，即可离线使用。CSS 和 JavaScript 通过相对路径加载，请保持这些文件位于同一目录。标签页图标使用内嵌的 🛼 emoji，无需独立图标文件。
 
