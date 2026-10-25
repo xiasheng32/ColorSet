@@ -1,4 +1,5 @@
-/* 229 palettes. Original IDs, sources, names and color order are retained.
+/* 215 palettes. Duplicate color sequences and combinations above 16 colors are removed;
+ * ids are renumbered 1-215. Names, sources and color order are retained.
  * #123 intentionally preserves the invalid original value #T3ABCF.
  */
 "use strict";
@@ -191,48 +192,34 @@ const RAW_PALETTES = [
   [185,"Rpk{ggsci}","pal_frontiers","#D51317 #F39200 #EFD500 #95C11F #007B3D #31B7BC #0094CD #164194 #6F286A #706F6F"],
   [186,"Rpk{ggsci}","pal_futurama","#FF6F00 #C71000 #008EA0 #8A4198 #5A9599 #FF6348 #84D7E1 #FF95A8 #3D3B25 #ADE2D0 #1A5354 #3F4041"],
   [187,"Rpk{ggsci}","pal_gsea","#4500AC #2600D1 #6B58EE #8787FF #C6C0FF #D4D4FF #FFBFE5 #FF8888 #FF707F #FF5959 #EE3F3F #D60C00"],
-  [188,"Rpk{ggsci}","pal_igv","#5050FF #CE3D32 #749B58 #F0E685 #466983 #BA6338 #5DB1DD #802268 #6BD76B #D595A7 #924822 #837B8D #C75127 #D58F5C #7A65A5 #E4AF69 #3B1B53 #CDDEB7 #612A79 #AE1F63 #E7C76F #5A655E #CC9900 #99CC00 #A9A9A9 #CC9900 #99CC00 #33CC00 #00CC33 #00CC99 #0099CC #0A47FF #4775FF #FFC20A #FFD147 #990033 #991A00 #996600 #809900 #339900 #00991A #009966 #008099 #003399 #1A0099 #660099 #990080 #D60047 #FF1463 #00D68F #14FFB1"],
-  [189,"Rpk{ggsci}","pal_iterm","#00CDE8 #FFC739 #FF666D #9DEAF6 #B3E03A #A392E8"],
-  [190,"Rpk{ggsci}","pal_jama","#374E55 #DF8F44 #00A1D5 #B24745 #79AF97 #6A6599 #80796B"],
-  [191,"Rpk{ggsci}","pal_jco","#0073C2 #EFC000 #868686 #CD534C #7AA6DC #003C67 #8F7700 #3B3B3B #A73030 #4A6990"],
-  [192,"Rpk{ggsci}","pal_lancet","#00468B #ED0000 #42B540 #0099B4 #925E9F #FDAF91 #AD002A #ADB6B6 #1B1919"],
-  [193,"Rpk{ggsci}","pal_locuszoom","#D43F3A #EEA236 #5CB85C #46B8DA #357EBD #9632B8 #B8B8B8"],
-  [194,"Rpk{ggsci}","pal_material","#FFEBED #FFCCD2 #EE9999 #E57272 #EE5250 #F34335 #E53934 #D22E2E #C52727 #B71B1B"],
-  [195,"Rpk{ggsci}","pal_nejm","#BC3C29 #0072B5 #E18727 #20854E #7876B1 #6F99AD #FFDC91 #EE4C97"],
-  [196,"Rpk{ggsci}","pal_npg","#E64B35 #4DBBD5 #00A087 #3C5488 #F39B7F #8491B4 #91D1C2 #DC0000 #7E6148 #B09C85"],
-  [197,"Rpk{ggsci}","pal_observable","#4269D0 #EFB118 #FF725C #6CC5B0 #3CA951 #FF8AB7 #A463F2 #97BBF5 #9C6B4E #9498A0"],
-  [198,"Rpk{ggsci}","pal_primer","#006EDB #EB670F #DF0C24 #179B9B #30A147 #894CEB #B88700 #CE2C85 #856D4C #527A29 #D43511 #167E53 #9D615C #64762D #A830E8 #866E04 #808FA3"],
-  [199,"Rpk{ggsci}","pal_rickandmorty","#FAFD7C #82491E #24325F #B7E4F9 #FB6467 #526E2D #E762D7 #E89242 #FAE48B #A6EEE6 #917C5D #69C8EC"],
-  [200,"Rpk{ggsci}","pal_simpsons","#FED439 #709AE1 #8A9197 #D2AF81 #FD7446 #D5E4A2 #197EC0 #F05C3B #46732E #71D0F5 #370335 #075149 #C80813 #91331F #1A9993 #FD8CC1"],
-  [201,"Rpk{ggsci}","pal_startrek","#CC0C00 #5C88DA #84BD00 #FFCD00 #7C878E #00B5E2 #00AF66"],
-  [202,"Rpk{ggsci}","pal_tron","#FF410D #6EE2FF #F7C530 #95CC5E #D0DFE6 #F79D1E #748AA6"],
-  [203,"Rpk{ggsci}","pal_tw3","#F8F9FC #EFF3F8 #DEE5ED #BBC6D5 #7C8CA3 #516075 #39475B #222E40 #10182B #010617"],
-  [204,"Rpk{ggsci}","pal_uchicago","#800000 #767676 #FFA319 #8A9045 #155F83 #C16622 #8F3931 #58593F #350E20"],
-  [205,"Rpk{ggsci}","pal_ucscgb","#FF0000 #FF9900 #FFCC00 #00FF00 #6699FF #CC33FF #99991E #999999 #FF00CC #CC0000 #FFCCCC #FFFF00 #CCFF00 #358000 #0000CC #99CCFF #00FFFF #CCFFFF #9900CC #CC99FF #996600 #666600 #666666 #CCCCCC #79CC3D #CCCC99"],
-  [206,"Rpk{grDevices}","R3","#000000 #FF0000 #00CD00 #0000FF #00FFFF #FF00FF #FFFF00 #BEBEBE"],
-  [207,"Rpk{grDevices}","R4","#000000 #DF536B #61D04F #2297E6 #28E2E5 #CD0BBC #F5C710 #9E9E9E"],
-  [208,"Rpk{grDevices}","ggplot2","#000000 #F8766D #00BA38 #619CFF #00BFC4 #F564E3 #B79F00 #9E9E9E"],
-  [209,"Rpk{grDevices}","Okabe-Ito","#000000 #E69F00 #56B4E9 #009E73 #F0E442 #0072B2 #D55E00 #CC79A7 #999999"],
-  [210,"Rpk{grDevices}","Accent","#7FC97F #BEAED4 #FDC086 #FFFF99 #386CB0 #F0027F #BF5B17 #666666"],
-  [211,"Rpk{grDevices}","Dark 2","#1B9E77 #D95F02 #7570B3 #E7298A #66A61E #E6AB02 #A6761D #666666"],
-  [212,"Rpk{grDevices}","Paired","#A6CEE3 #1F78B4 #B2DF8A #33A02C #FB9A99 #E31A1C #FDBF6F #FF7F00 #CAB2D6 #6A3D9A #FFFF99 #B15928"],
-  [213,"Rpk{grDevices}","Pastel 1","#FBB4AE #B3CDE3 #CCEBC5 #DECBE4 #FED9A6 #FFFFCC #E5D8BD #FDDAEC #F2F2F2"],
-  [214,"Rpk{grDevices}","Pastel 2","#B3E2CD #FDCDAC #CBD5E8 #F4CAE4 #E6F5C9 #FFF2AE #F1E2CC #CCCCCC"],
-  [215,"Rpk{grDevices}","Set 1","#E41A1C #377EB8 #4DAF4A #984EA3 #FF7F00 #FFFF33 #A65628 #F781BF #999999"],
-  [216,"Rpk{grDevices}","Set 2","#66C2A5 #FC8D62 #8DA0CB #E78AC3 #A6D854 #FFD92F #E5C494 #B3B3B3"],
-  [217,"Rpk{grDevices}","Set 3","#8DD3C7 #FFFFB3 #BEBADA #FB8072 #80B1D3 #FDB462 #B3DE69 #FCCDE5 #D9D9D9 #BC80BD #CCEBC5 #FFED6F"],
-  [218,"Rpk{grDevices}","Tableau 10","#4E79A7 #F28E2B #E15759 #76B7B2 #59A14F #EDC948 #B07AA1 #FF9DA7 #9C755F #BAB0AC"],
-  [219,"Rpk{grDevices}","Classic Tableau","#1F77B4 #FF7F0E #2CA02C #D62728 #9467BD #8C564B #E377C2 #7F7F7F #BCBD22 #17BECF"],
-  [220,"Rpk{grDevices}","Polychrome 36","#5A5156 #E4E1E3 #F6222E #FE00FA #16FF32 #3283FE #FEAF16 #B00068 #1CFFCE #90AD1C #2ED9FF #DEA0FD #AA0DFE #F8A19F #325A9B #C4451C #1C8356 #85660D #B10DA1 #FBE426 #1CBE4F #FA0087 #FC1CBF #F7E1A0 #C075A6 #782AB6 #AAF400 #BDCDFF #822E1C #B5EFB5 #7ED7D1 #1C7F93 #D85FF7 #683B79 #66B0FF #3B00FB"],
-  [221,"Rpk{grDevices}","Alphabet","#AA0DFE #3283FE #85660D #782AB6 #565656 #1C8356 #16FF32 #F7E1A0 #E2E2E2 #1CBE4F #C4451C #DEA0FD #FE00FA #325A9B #FEAF16 #F8A19F #90AD1C #F6222E #1CFFCE #2ED9FF #B10DA1 #C075A6 #FC1CBF #B00068 #FBE426 #FA0087"],
-  [222,"Rpk{RColorBrewer}","Accent","#7FC97F #BEAED4 #FDC086 #FFFF99 #386CB0 #F0027F #BF5B17 #666666"],
-  [223,"Rpk{RColorBrewer}","Dark2","#1B9E77 #D95F02 #7570B3 #E7298A #66A61E #E6AB02 #A6761D #666666"],
-  [224,"Rpk{RColorBrewer}","Paired","#A6CEE3 #1F78B4 #B2DF8A #33A02C #FB9A99 #E31A1C #FDBF6F #FF7F00 #CAB2D6 #6A3D9A #FFFF99 #B15928"],
-  [225,"Rpk{RColorBrewer}","Pastel1","#FBB4AE #B3CDE3 #CCEBC5 #DECBE4 #FED9A6 #FFFFCC #E5D8BD #FDDAEC #F2F2F2"],
-  [226,"Rpk{RColorBrewer}","Pastel2","#B3E2CD #FDCDAC #CBD5E8 #F4CAE4 #E6F5C9 #FFF2AE #F1E2CC #CCCCCC"],
-  [227,"Rpk{RColorBrewer}","Set1","#E41A1C #377EB8 #4DAF4A #984EA3 #FF7F00 #FFFF33 #A65628 #F781BF #999999"],
-  [228,"Rpk{RColorBrewer}","Set2","#66C2A5 #FC8D62 #8DA0CB #E78AC3 #A6D854 #FFD92F #E5C494 #B3B3B3"],
-  [229,"Rpk{RColorBrewer}","Set3","#8DD3C7 #FFFFB3 #BEBADA #FB8072 #80B1D3 #FDB462 #B3DE69 #FCCDE5 #D9D9D9 #BC80BD #CCEBC5 #FFED6F"]
+  [188,"Rpk{ggsci}","pal_iterm","#00CDE8 #FFC739 #FF666D #9DEAF6 #B3E03A #A392E8"],
+  [189,"Rpk{ggsci}","pal_jama","#374E55 #DF8F44 #00A1D5 #B24745 #79AF97 #6A6599 #80796B"],
+  [190,"Rpk{ggsci}","pal_jco","#0073C2 #EFC000 #868686 #CD534C #7AA6DC #003C67 #8F7700 #3B3B3B #A73030 #4A6990"],
+  [191,"Rpk{ggsci}","pal_lancet","#00468B #ED0000 #42B540 #0099B4 #925E9F #FDAF91 #AD002A #ADB6B6 #1B1919"],
+  [192,"Rpk{ggsci}","pal_locuszoom","#D43F3A #EEA236 #5CB85C #46B8DA #357EBD #9632B8 #B8B8B8"],
+  [193,"Rpk{ggsci}","pal_material","#FFEBED #FFCCD2 #EE9999 #E57272 #EE5250 #F34335 #E53934 #D22E2E #C52727 #B71B1B"],
+  [194,"Rpk{ggsci}","pal_nejm","#BC3C29 #0072B5 #E18727 #20854E #7876B1 #6F99AD #FFDC91 #EE4C97"],
+  [195,"Rpk{ggsci}","pal_npg","#E64B35 #4DBBD5 #00A087 #3C5488 #F39B7F #8491B4 #91D1C2 #DC0000 #7E6148 #B09C85"],
+  [196,"Rpk{ggsci}","pal_observable","#4269D0 #EFB118 #FF725C #6CC5B0 #3CA951 #FF8AB7 #A463F2 #97BBF5 #9C6B4E #9498A0"],
+  [197,"Rpk{ggsci}","pal_rickandmorty","#FAFD7C #82491E #24325F #B7E4F9 #FB6467 #526E2D #E762D7 #E89242 #FAE48B #A6EEE6 #917C5D #69C8EC"],
+  [198,"Rpk{ggsci}","pal_simpsons","#FED439 #709AE1 #8A9197 #D2AF81 #FD7446 #D5E4A2 #197EC0 #F05C3B #46732E #71D0F5 #370335 #075149 #C80813 #91331F #1A9993 #FD8CC1"],
+  [199,"Rpk{ggsci}","pal_startrek","#CC0C00 #5C88DA #84BD00 #FFCD00 #7C878E #00B5E2 #00AF66"],
+  [200,"Rpk{ggsci}","pal_tron","#FF410D #6EE2FF #F7C530 #95CC5E #D0DFE6 #F79D1E #748AA6"],
+  [201,"Rpk{ggsci}","pal_tw3","#F8F9FC #EFF3F8 #DEE5ED #BBC6D5 #7C8CA3 #516075 #39475B #222E40 #10182B #010617"],
+  [202,"Rpk{ggsci}","pal_uchicago","#800000 #767676 #FFA319 #8A9045 #155F83 #C16622 #8F3931 #58593F #350E20"],
+  [203,"Rpk{grDevices}","R3","#000000 #FF0000 #00CD00 #0000FF #00FFFF #FF00FF #FFFF00 #BEBEBE"],
+  [204,"Rpk{grDevices}","R4","#000000 #DF536B #61D04F #2297E6 #28E2E5 #CD0BBC #F5C710 #9E9E9E"],
+  [205,"Rpk{grDevices}","ggplot2","#000000 #F8766D #00BA38 #619CFF #00BFC4 #F564E3 #B79F00 #9E9E9E"],
+  [206,"Rpk{grDevices}","Okabe-Ito","#000000 #E69F00 #56B4E9 #009E73 #F0E442 #0072B2 #D55E00 #CC79A7 #999999"],
+  [207,"Rpk{grDevices}","Accent","#7FC97F #BEAED4 #FDC086 #FFFF99 #386CB0 #F0027F #BF5B17 #666666"],
+  [208,"Rpk{grDevices}","Dark 2","#1B9E77 #D95F02 #7570B3 #E7298A #66A61E #E6AB02 #A6761D #666666"],
+  [209,"Rpk{grDevices}","Paired","#A6CEE3 #1F78B4 #B2DF8A #33A02C #FB9A99 #E31A1C #FDBF6F #FF7F00 #CAB2D6 #6A3D9A #FFFF99 #B15928"],
+  [210,"Rpk{grDevices}","Pastel 1","#FBB4AE #B3CDE3 #CCEBC5 #DECBE4 #FED9A6 #FFFFCC #E5D8BD #FDDAEC #F2F2F2"],
+  [211,"Rpk{grDevices}","Pastel 2","#B3E2CD #FDCDAC #CBD5E8 #F4CAE4 #E6F5C9 #FFF2AE #F1E2CC #CCCCCC"],
+  [212,"Rpk{grDevices}","Set 1","#E41A1C #377EB8 #4DAF4A #984EA3 #FF7F00 #FFFF33 #A65628 #F781BF #999999"],
+  [213,"Rpk{grDevices}","Set 2","#66C2A5 #FC8D62 #8DA0CB #E78AC3 #A6D854 #FFD92F #E5C494 #B3B3B3"],
+  [214,"Rpk{grDevices}","Set 3","#8DD3C7 #FFFFB3 #BEBADA #FB8072 #80B1D3 #FDB462 #B3DE69 #FCCDE5 #D9D9D9 #BC80BD #CCEBC5 #FFED6F"],
+  [215,"Rpk{grDevices}","Tableau 10","#4E79A7 #F28E2B #E15759 #76B7B2 #59A14F #EDC948 #B07AA1 #FF9DA7 #9C755F #BAB0AC"],
 ];
 
 const PALETTES = RAW_PALETTES.map(([id, source, name, hex]) => ({ id, source, name, colors: hex.split(" ") }));
@@ -244,7 +231,6 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
   const LANGUAGE_KEY = "color-database.language.v1";
   const THEME_KEY = "color-database.theme.v1";
   const COLOR_PAGE_SIZE = 10;
-  const PREVIEW_COLOR_LIMIT = 16;
   const sourceCounts = new Map();
   PALETTES.forEach(({ source }) => sourceCounts.set(source, (sourceCounts.get(source) || 0) + 1));
   const translations = {
@@ -261,7 +247,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
       copyAll: "复制全部", copyAllLabel: "复制全部 {count} 色", copiedAll: "已复制全部 {count} 色", copiedColor: "已复制 {hex}",
       copyColor: "复制第 {index} 色：{hex}", invalidOriginalNote: "原始色值 {values} 无效；预览使用灰色占位，复制保留原文。",
       closePreview: "关闭预览", colors: "颜色", copyTitle: "复制色值", closeCopy: "关闭复制窗口",
-      previewLimit: "图表使用前 {used} 色，完整方案共 {total} 色。", previousColors: "上一页颜色", nextColors: "下一页颜色", colorPage: "第 {page} 页，共 {pages} 页",
+      previousColors: "上一页颜色", nextColors: "下一页颜色", colorPage: "第 {page} 页，共 {pages} 页",
       opacity: "不透明度", opacityValue: "{value}% 不透明度",
       copyHelp: "无法自动复制。请手动复制已选中的文本。", copyValues: "待复制的色值", selectAll: "全选"
     },
@@ -278,7 +264,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
       copyAll: "Copy all", copyAllLabel: "Copy all {count} colors", copiedAll: "Copied all {count} colors", copiedColor: "Copied {hex}",
       copyColor: "Copy color {index}: {hex}", invalidOriginalNote: "Invalid original value {values}; shown in gray and copied unchanged.",
       closePreview: "Close preview", colors: "Colors", copyTitle: "Copy colors", closeCopy: "Close copy window",
-      previewLimit: "Charts use the first {used} of {total} colors.", previousColors: "Previous colors", nextColors: "Next colors", colorPage: "Page {page} of {pages}",
+      previousColors: "Previous colors", nextColors: "Next colors", colorPage: "Page {page} of {pages}",
       opacity: "Opacity", opacityValue: "{value}% opacity",
       copyHelp: "Automatic copying is unavailable. Please copy the selected text manually.", copyValues: "Color values to copy", selectAll: "Select all"
     }
@@ -507,8 +493,6 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     const invalidColors = palette.colors.filter((hex) => !validColor(hex));
     $("invalid-warning").hidden = invalidColors.length === 0;
     $("invalid-warning").textContent = t("invalidOriginalNote", { values: invalidColors.join(", ") });
-    $("preview-limit-note").hidden = palette.colors.length <= PREVIEW_COLOR_LIMIT;
-    $("preview-limit-note").textContent = t("previewLimit", { used: PREVIEW_COLOR_LIMIT, total: palette.colors.length });
     $("all-colors").classList.toggle("has-multiple-rows", palette.colors.length > 5);
     $("all-colors").style.setProperty("--compact-color-rows", String(Math.ceil(Math.min(palette.colors.length, COLOR_PAGE_SIZE) / 2)));
     renderColorPage();
@@ -558,7 +542,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     if (key === previewKey) return;
     // Fit 4:3 canvases inside the available window without stretching the charts.
     ["bar", "box", "scatter", "line"].forEach((kind) => {
-      $(`chart-${kind}`).innerHTML = chartSVG(kind, state.selected.colors.slice(0, PREVIEW_COLOR_LIMIT), width);
+      $(`chart-${kind}`).innerHTML = chartSVG(kind, state.selected.colors, width);
     });
     previewKey = key;
   }
@@ -612,7 +596,7 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     [7.0, 7.25, 7.45, 8.35, 9.95],
     [7.1, 7.65, 8.25, 9.1, 9.88]
   ];
-  const DEMO = Array.from({ length: PREVIEW_COLOR_LIMIT }, (_, index) => {
+  const DEMO = Array.from({ length: 16 }, (_, index) => {
     const random = randomSource(9173 + index * 71);
     const sorted = Array.from({ length: 28 }, () => 8.5 + (random() - 0.5) * 2.9).sort((a, b) => a - b);
     const scatter = Array.from({ length: 26 }, () => [0.01 + random() * 0.98, index * .35 + (random() - .5) * .58]);

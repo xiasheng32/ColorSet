@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fafafa">
-  <meta name="description" content="ColorSet 配色工具，内置 229 组方案，支持搜索、筛选、收藏、完整色值复制与四种图表预览。">
+  <meta name="description" content="ColorSet 配色工具，内置 215 组方案，支持搜索、筛选、收藏、完整色值复制与四种图表预览。">
   <title>ColorSet</title>
   <script>
     (() => {
@@ -65,7 +65,7 @@
           <label class="select-box"><span class="visually-hidden" data-i18n="countFilterLabel">按颜色数量筛选</span><select id="count-filter" aria-label="颜色数量" data-i18n-label="countFilterLabel"><option value="all">全部色数</option></select><svg class="icon select-chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></label>
         </div>
         <div class="results-bar">
-          <p id="results-summary" role="status" aria-live="polite"><strong>全部配色</strong><span>229 组</span></p>
+          <p id="results-summary" role="status" aria-live="polite"><strong>全部配色</strong><span>215 组</span></p>
           <div><button id="reset-filters" class="text-button" type="button" data-i18n="clearFilters" hidden>清除筛选</button></div>
         </div>
       </div>
@@ -88,7 +88,6 @@
       </header>
       <div class="detail-content">
         <p id="invalid-warning" class="warning-note" hidden></p>
-        <p id="preview-limit-note" class="preview-note" hidden></p>
         <div class="chart-grid" lang="en">
           <figure class="chart-panel"><figcaption>Bar Chart with outlines</figcaption><div id="chart-bar" class="chart-container"></div></figure>
           <figure class="chart-panel"><figcaption>Boxplot with outlines</figcaption><div id="chart-box" class="chart-container"></div></figure>
