@@ -96,16 +96,20 @@
           <figure class="chart-panel"><figcaption>Line chart without outlines</figcaption><div id="chart-line" class="chart-container"></div></figure>
         </div>
         <div class="opacity-control">
-          <div class="opacity-heading"><label for="preview-opacity" data-i18n="opacity">不透明度</label><output id="opacity-value" for="preview-opacity">100%</output></div>
+          <label for="preview-opacity" class="visually-hidden" data-i18n="opacity">不透明度</label>
           <div class="opacity-slider">
-            <div class="opacity-track" aria-hidden="true"><div class="opacity-fill"></div></div>
-            <div class="opacity-dots" aria-hidden="true"><span style="left:0%"></span><span style="left:20%"></span><span style="left:40%"></span><span style="left:60%"></span><span style="left:80%"></span><span style="left:100%"></span></div>
-            <input id="preview-opacity" type="range" min="0" max="100" step="1" value="100">
+            <output id="opacity-value" class="opacity-bubble" for="preview-opacity">100%</output>
+            <div class="opacity-gauge">
+              <div class="opacity-track" aria-hidden="true"><div class="opacity-fill"></div></div>
+              <div class="opacity-dots" aria-hidden="true"><span style="left:0%"></span><span style="left:20%"></span><span style="left:40%"></span><span style="left:60%"></span><span style="left:80%"></span><span style="left:100%"></span></div>
+              <input id="preview-opacity" type="range" min="0" max="100" step="1" value="100">
+            </div>
           </div>
         </div>
         <section id="all-colors" class="all-colors" aria-labelledby="all-colors-title">
-          <div class="section-heading"><h3 id="all-colors-title"><span data-i18n="colors">Colors</span><span id="detail-color-count" class="color-count"></span></h3><div id="color-pagination" class="color-pagination" hidden><button id="previous-colors" class="icon-button page-previous" type="button" aria-label="上一页颜色" data-i18n-label="previousColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button><span id="color-page-status" role="status" aria-live="polite" aria-atomic="true"></span><button id="next-colors" class="icon-button" type="button" aria-label="下一页颜色" data-i18n-label="nextColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button></div></div>
+          <h3 id="all-colors-title" class="visually-hidden" data-i18n="colors">Colors</h3>
           <div id="detail-color-grid" class="detail-color-grid"></div>
+          <div id="color-pagination" class="color-pagination" hidden><button id="previous-colors" class="icon-button page-previous" type="button" aria-label="上一页颜色" data-i18n-label="previousColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button><span id="color-page-status" role="status" aria-live="polite" aria-atomic="true"></span><button id="next-colors" class="icon-button" type="button" aria-label="下一页颜色" data-i18n-label="nextColors"><svg class="icon" aria-hidden="true"><use href="#icon-chevron"/></svg></button></div>
         </section>
       </div>
     </div>

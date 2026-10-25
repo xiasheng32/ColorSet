@@ -502,7 +502,6 @@ const PALETTES_BY_ID = new Map(PALETTES.map((palette) => [palette.id, palette]))
     $("copy-palette").querySelector("span").textContent = t("copyAll");
     $("copy-palette").setAttribute("aria-label", t("copyAllLabel", { count: palette.colors.length }));
     $("copy-palette").title = t("copyAllLabel", { count: palette.colors.length });
-    $("detail-color-count").textContent = palette.colors.length;
     $("detail-favorite").dataset.favorite = palette.id;
     syncFavoriteButtons(palette.id);
     const invalidColors = palette.colors.filter((hex) => !validColor(hex));
